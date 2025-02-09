@@ -28,7 +28,7 @@ public class TridentBehaviour : MonoBehaviour
         edgeCollider.enabled = false;
     }
 
-    void Update()
+    private void Update()
     {
         RecordCursorLocation();
 
@@ -53,7 +53,7 @@ public class TridentBehaviour : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (isIdlePosition)
         {
@@ -101,6 +101,11 @@ public class TridentBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //if (collision.TryGetComponent<>)
+        }
+            
         hasLanded = true;
         body.excludeLayers = layerMaskLanded;
     }

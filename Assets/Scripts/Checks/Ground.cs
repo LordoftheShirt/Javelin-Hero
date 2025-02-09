@@ -9,17 +9,6 @@ public class Ground : MonoBehaviour
 
     private Vector2 normal;
     private PhysicsMaterial2D material;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -42,7 +31,7 @@ public class Ground : MonoBehaviour
     private void EvaluateCollision(Collision2D collision)
     {
         // Looks at each collision and checks at which angle thus collision occured. A normal is a vector which points perpindicular, directly out from the surface of which it detects.
-        // So to say, a horizontal flat surface should have a normal of y = 1. A normal only has 1 in length, meaning, it's pointing directly upwards. Some leeway is given: if y is 0.9 or more, set the onGround bool to true.
+        // So to say, a horizontal flat surface should have a normal of y = 1. A normal only has 1 in length, meaning, it's pointing directly upwards. Some leeway is given: if y is 0.7 or more, set the onGround bool to true.
         for (int i = 0; i < collision.contactCount; i++) 
         { 
             normal = collision.GetContact(i).normal;
@@ -52,7 +41,7 @@ public class Ground : MonoBehaviour
     }
 
 
-    // Gathers the material of the other object and checks whether it's null. If it is, friction stays at 0. Otherwise, sample the friction value.
+    // Gathers the material of the other object and checks whether it's null. If it is, assume friction stays at 0. Otherwise, sample the friction value.
     private void RetrieveCollision(Collision2D collision) 
     {
         material = collision.rigidbody.sharedMaterial;
