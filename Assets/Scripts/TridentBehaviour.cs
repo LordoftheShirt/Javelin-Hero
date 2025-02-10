@@ -6,20 +6,23 @@ public class TridentBehaviour : MonoBehaviour
     [SerializeField] private InputController input = null;
     [SerializeField, Range(0f, 100f)] private float idleFollowSpeed = 5f;
     [SerializeField, Range(0f, 100f)] private float throwSpeed = 5f;
+    [SerializeField, Range(0f, 100f)] private float anticipationSpeed = 5f;
+    [SerializeField, Range(0f, 2f)] private float anticipationTime = 0.2f;
     [SerializeField] private Transform followAnchor;
     [SerializeField] private Transform cursor;
     [SerializeField] private LayerMask layerMaskLanded, layerMaskIdle;
 
-    private Vector2 screenPosition, lineInSpace;
-    private Vector3 worldPosition;
+    private Vector2 screenPosition, normal;
+    private Vector3 worldPosition, cursorToTridentDelta;
     private Ray mouseRay;
     //private RaycastHit2D hit;
 
-    private bool isIdlePosition = true;
+    private bool isIdleState = true;
     private bool hasLanded = false;
 
     private EdgeCollider2D edgeCollider;
     private Rigidbody2D body;
+    private float anticipationCounter;
 
     private void Start()
     {
@@ -34,28 +37,29 @@ public class TridentBehaviour : MonoBehaviour
 
         if (input.RetrieveTridentThrowInput())
         {
-            if (isIdlePosition)
+            if (isIdleState)
             {
-                isIdlePosition = false;
+                isIdleState = false;
                 edgeCollider.enabled = true;
             }
         }
 
         if (input.RetrieveTridentRecallInput())
         {
-            if (!isIdlePosition)
+            if (!isIdleState)
             {
-                isIdlePosition = true;
+                isIdleState = true;
                 hasLanded = false;
                 edgeCollider.enabled = false;
                 body.excludeLayers = layerMaskIdle;
+                anticipationCounter = anticipationTime;
             }
         }
     }
 
     private void LateUpdate()
     {
-        if (isIdlePosition)
+        if (isIdleState)
         {
             UpTowardsCursor();
             transform.position = Vector2.MoveTowards(transform.position, followAnchor.position, Time.deltaTime * idleFollowSpeed);
@@ -80,21 +84,26 @@ public class TridentBehaviour : MonoBehaviour
 
     private void UpTowardsCursor()
     {
-
         // moves "end" object to cursor location.
         cursor.position = worldPosition;
 
-        lineInSpace = new Vector2(cursor.position.x - followAnchor.position.x, cursor.position.y - followAnchor.position.y);
-        transform.up = lineInSpace;
+        cursorToTridentDelta = cursor.position - transform.position;
+        //cursorToTridentDelta = new Vector2(cursor.position.x - transform.position.x, cursor.position.y - transform.position.y);
+        transform.up = cursorToTridentDelta;
     }
 
     private void TridentThrowAction()
     {
-        if (!isIdlePosition)
+        if (!isIdleState && !hasLanded)
         {
-            if (!hasLanded)
+            if (0 < anticipationCounter)
             {
-                transform.position = Vector2.MoveTowards(transform.position, lineInSpace * 100f, Time.deltaTime * throwSpeed);
+                transform.position += -cursorToTridentDelta.normalized * anticipationSpeed * Time.deltaTime;
+                anticipationCounter -= Time.deltaTime;
+            } 
+            else 
+            {
+                transform.position += cursorToTridentDelta.normalized * throwSpeed * Time.deltaTime;
             }
         }
     }
@@ -105,14 +114,14 @@ public class TridentBehaviour : MonoBehaviour
         {
             //if (collision.TryGetComponent<>)
         }
-            
         hasLanded = true;
         body.excludeLayers = layerMaskLanded;
+        print(collision);
     }
 
 
     public Vector2 GetTridentVectorDirection()
     {
-        return lineInSpace.normalized;
+        return cursorToTridentDelta.normalized;
     }
 }

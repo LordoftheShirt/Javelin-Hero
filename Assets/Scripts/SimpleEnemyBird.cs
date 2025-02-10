@@ -43,6 +43,7 @@ public class SimpleEnemyBird : MonoBehaviour
         {
             normal = collision.GetContact(0).normal;
 
+            // if player comes in from the sides or below (Below shouldn't actually be here): take 1 dmg and deal this amount of knockback.
             if (normal.x > 0.9f || normal.x < -0.9f || normal.y > 0.9f)
             {
                 if (collision.gameObject.TryGetComponent<Move>(out Move moveScript))
