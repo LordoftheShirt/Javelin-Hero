@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: ea208b77c7f473642a1d732e3468aa4c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - gravityVectorObjectPrefabAssign: {fileID: 6745740599749314198, guid: 61731fbaa54a1a94dabc9d56831bb4f9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
