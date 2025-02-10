@@ -6,6 +6,8 @@ public class SmoothDampPlatform : MonoBehaviour
 {
     [SerializeField] private Transform target1, target2;
     [SerializeField, Range(0, 100)] private float speed = 1;
+    private bool forward = true;
+    private Rigidbody2D rb;
 
     // Smoothdampers:
     //private float lerpedValue;
@@ -15,7 +17,7 @@ public class SmoothDampPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -25,7 +27,24 @@ public class SmoothDampPlatform : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.position = Vector2.Lerp(transform.position, target1.position, speed * Time.deltaTime);
+        if (forward)
+        {
+            transform.position = Vector2.Lerp(transform.position, target1.position, speed * Time.deltaTime);
+            /*if (rb.velocity.magnitude < 0.1f)
+            {
+                forward = false;
+            }
+        }
+        else
+        {
+            transform.position = Vector2.Lerp(transform.position, target2.position, speed * Time.deltaTime);
+            if (rb.velocity.magnitude < 0.1f)
+            {
+                forward = true;
+            } */
+        }
+
+        
 
     }
 }

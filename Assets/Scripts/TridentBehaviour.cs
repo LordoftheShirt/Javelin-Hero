@@ -26,6 +26,7 @@ public class TridentBehaviour : MonoBehaviour
 
     private void Start()
     {
+        anticipationCounter = anticipationTime;
         body = GetComponent<Rigidbody2D>();
         edgeCollider = GetComponent<EdgeCollider2D>();
         edgeCollider.enabled = false;
@@ -116,12 +117,22 @@ public class TridentBehaviour : MonoBehaviour
         }
         hasLanded = true;
         body.excludeLayers = layerMaskLanded;
-        print(collision);
     }
 
 
     public Vector2 GetTridentVectorDirection()
     {
         return cursorToTridentDelta.normalized;
+    }
+
+    public bool GetImpactCheck()
+    {
+        return hasLanded;
+    }
+
+    public Vector2 TridentStandCoordinates()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        return transform.position;
     }
 }
