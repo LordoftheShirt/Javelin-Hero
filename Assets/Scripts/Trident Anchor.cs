@@ -8,17 +8,6 @@ public class TridentAnchor : MonoBehaviour
     [SerializeField, Range(0f, 5f)] private float anchorHeightValue = 0.9f;
     [SerializeField, Range(0f, 5f)] private float anchorVerticalValue = 0.5f;
     private Vector2 anchorPoint;
-    private Vector2 parentVelocity;
-    private Rigidbody2D parentBody;
- 
-    void Start()
-    {
-        parentBody = GetComponentInParent<Rigidbody2D>();
-    }
-    void Update()
-    {
-        parentVelocity = parentBody.velocity.normalized;
-    }
 
     private void FixedUpdate()
     {

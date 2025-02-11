@@ -8,14 +8,13 @@ public class TridentBehaviour : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float throwSpeed = 5f;
     [SerializeField, Range(0f, 100f)] private float anticipationSpeed = 5f;
     [SerializeField, Range(0f, 2f)] private float anticipationTime = 0.2f;
+    [SerializeField, Range(0f, 90f)] private float noAnticipationAngle = 40;
     [SerializeField] private Transform followAnchor;
     [SerializeField] private Transform cursor;
     [SerializeField] private LayerMask layerMaskLanded, layerMaskIdle;
 
-    private Vector2 screenPosition, normal;
-    private Vector3 worldPosition, cursorToTridentDelta;
-    private Ray mouseRay;
-    //private RaycastHit2D hit;
+    private Vector2 normal;
+    private Vector3 cursorToTridentDelta;
 
     private bool isIdleState = true;
     private bool hasLanded = false;
@@ -34,8 +33,6 @@ public class TridentBehaviour : MonoBehaviour
 
     private void Update()
     {
-        RecordCursorLocation();
-
         if (input.RetrieveTridentThrowInput())
         {
             if (isIdleState)
@@ -72,24 +69,12 @@ public class TridentBehaviour : MonoBehaviour
         TridentThrowAction();
     }
 
-    private void RecordCursorLocation()
-    {
-        // Gets input of mouse, Ray "mouseRay" records the Vector2 (x and y) of the mouse position on screen relative to resolution.
-        screenPosition = Input.mousePosition;
-        mouseRay = Camera.main.ScreenPointToRay(screenPosition);
-
-        // Vector3 worldPosition translates the x and y to where that position is in the real world. Since it is Vector3 (has z), z must be set to 0. Otherwise it'll be on the same z as camera.
-        worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-        worldPosition.z = 0;
-    }
-
     private void UpTowardsCursor()
     {
-        // moves "end" object to cursor location.
-        cursor.position = worldPosition;
+        // moves "cursor" object to cursor location. I think this dude doesn't actually have to exist. I just like him.
+        cursor.position = RecordCursor.GetCursorPosition();
 
         cursorToTridentDelta = cursor.position - transform.position;
-        //cursorToTridentDelta = new Vector2(cursor.position.x - transform.position.x, cursor.position.y - transform.position.y);
         transform.up = cursorToTridentDelta;
     }
 
@@ -97,7 +82,8 @@ public class TridentBehaviour : MonoBehaviour
     {
         if (!isIdleState && !hasLanded)
         {
-            if (0 < anticipationCounter)
+            // Anticipation animation: Checks if the anticipation counter is activated, so that the spear isn't pointed far enough down in which case it should fire instantaneously.
+            if (0 < anticipationCounter && (transform.eulerAngles.z > 180 + noAnticipationAngle || transform.eulerAngles.z < 180 - noAnticipationAngle))
             {
                 transform.position += -cursorToTridentDelta.normalized * anticipationSpeed * Time.deltaTime;
                 anticipationCounter -= Time.deltaTime;

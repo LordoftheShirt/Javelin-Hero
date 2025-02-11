@@ -108,7 +108,11 @@ public class Jump : MonoBehaviour
                 jumpPhase++;
             }
 
-            velocity.y = 0f;
+            // the existence of this if allows the stacking of jumpForces. Is that desirable? Can get extreme.
+            if (velocity.y < 0)
+            {
+                velocity.y = 0f;
+            }
 
             jumpBufferCounter = 0;
             coyoteCounter = 0;
