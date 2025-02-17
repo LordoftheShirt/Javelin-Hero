@@ -35,7 +35,7 @@ public class Ground : MonoBehaviour
         for (int i = 0; i < collision.contactCount; i++) 
         { 
             normal = collision.GetContact(i).normal;
-            onGround |= normal.y >= 0.7f;
+            onGround |= normal.y >= 0.3f;
             //print(normal.y);
         }
     }
