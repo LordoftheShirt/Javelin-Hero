@@ -48,6 +48,9 @@ TagManager:
   - name: Player
     uniqueID: 2632885569
     locked: 0
+  - name: Colliders
+    uniqueID: 1237763387
+    locked: 0
   - name: Black Death
     uniqueID: 713227925
     locked: 0

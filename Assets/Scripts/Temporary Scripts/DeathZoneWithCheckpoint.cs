@@ -10,6 +10,7 @@ public class DeathZoneWithCheckpoint : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
             collision.transform.position = respawn.position;
             BlackBoxManager.turnBlack = true;
         }
