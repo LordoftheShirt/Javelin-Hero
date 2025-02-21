@@ -11,6 +11,7 @@ public class DeathZoneWithCheckpoint : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             collision.transform.position = respawn.position;
+            BlackBoxManager.turnBlack = true;
         }
     }
 }
