@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
+    [SerializeField] private PlayerAnimation playerAnimation;
     [SerializeField] private InputController input = null;
+    [Header("Values:")]
     [SerializeField, Range(0f, 20f)] private float jumpHeight = 3f;
     [SerializeField, Range(0, 5)] private int maxAirJumps = 0;
     [SerializeField, Range(0f, 5f)] private float downwardMovementMultiplier = 3f;
@@ -128,7 +130,10 @@ public class Jump : MonoBehaviour
 
                 // had to add this in to prevent spam jumping: When is ground resets the coyoteCounter even before feet leave the ground.
                 preventSpamJumpCounter = coyoteTime;
-
+                if (playerAnimation != null)
+                {
+                playerAnimation.jumpTriggered = true;
+                }
                 // Checks so that the jumpSpeed never goes negative. That might make you start floating. Although I see no scenario where the jumpSpeed ever does go negative. One would have to on purpose make the JumpHeight negative (not within its range),
                 // or make the gravity go negative (when would gravity ever go negative?).  
                 if (velocity.y > 0f)

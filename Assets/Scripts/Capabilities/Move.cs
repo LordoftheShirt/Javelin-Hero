@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    [SerializeField] private PlayerAnimation playerAnimation;
     [SerializeField] private InputController input = null;
     [Header ("Player Movement")]
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
@@ -80,4 +81,10 @@ public class Move : MonoBehaviour
             body.AddForce(direction * -knockbackForce);
         }
     }
+
+    public Vector2 GetVelocity()
+    {
+        return body.velocity;
+    }
 }
+
