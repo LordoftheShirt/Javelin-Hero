@@ -5,6 +5,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [SerializeField] private PlayerAnimation playerAnimation;
+
     [SerializeField] private InputController input = null;
     [Header ("Player Movement")]
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
@@ -35,6 +36,10 @@ public class Move : MonoBehaviour
         direction.x = input.RetrieveMoveInput();
         desiredVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed - ground.GetFriction(), 0f);
         //print("Move friction: " +ground.GetFriction());
+        if (playerAnimation != null)
+        {
+            FeedVelocityData();
+        }
     }
 
     private void FixedUpdate()
@@ -82,9 +87,9 @@ public class Move : MonoBehaviour
         }
     }
 
-    public Vector2 GetVelocity()
+    private void FeedVelocityData()
     {
-        return body.velocity;
+        playerAnimation.velocityAmount = body.velocity.x;
     }
 }
 

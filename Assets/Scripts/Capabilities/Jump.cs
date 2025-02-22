@@ -44,6 +44,7 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
+        FeedGroundData();
         desiredJump |= input.RetrieveJumpInput(); 
     }
 
@@ -142,5 +143,10 @@ public class Jump : MonoBehaviour
                 }
                 velocity.y += jumpSpeed;
         }
+    }
+
+    private void FeedGroundData()
+    {
+        playerAnimation.onGround = onGround;
     }
 }
