@@ -89,7 +89,7 @@ public class Move : MonoBehaviour
 
     private void FeedVelocityData()
     {
-        playerAnimation.velocityAmount = body.velocity.x;
+        playerAnimation.velocityAmount = body.velocity;
     }
 }
 
