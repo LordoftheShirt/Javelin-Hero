@@ -4805,7 +4805,7 @@ GameObject:
   - component: {fileID: 254536629}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5712,7 +5712,7 @@ GameObject:
   - component: {fileID: 288487540}
   m_Layer: 8
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Colliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6194,7 +6194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &312390824
 Transform:
   m_ObjectHideFlags: 0
@@ -14205,7 +14205,7 @@ GameObject:
   - component: {fileID: 697963420}
   m_Layer: 0
   m_Name: Player Sprite
-  m_TagString: Untagged
+  m_TagString: PlayerSprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22471,7 +22471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1154295046
 Transform:
   m_ObjectHideFlags: 0

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - SpriteManager
+  - Background
+  - PlayerSprite
+  - Colliders
   layers:
   - Default
   - TransparentFX

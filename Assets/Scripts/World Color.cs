@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class WorldColor : MonoBehaviour
 {
+
     [SerializeField] private float colorChangeSpeed = 2f;
 
     [SerializeField] private int roomNumber;
@@ -40,7 +41,6 @@ public class WorldColor : MonoBehaviour
 
     void LateUpdate()
     {
-
         if (changeColor && roomPriority == roomNumber)
         {
             if (SpriteManager.walls[SpriteManager.walls.Length - 1].color == allWallsColor && SpriteManager.player.color == playerColor && SpriteManager.background.color == backgroundColor)

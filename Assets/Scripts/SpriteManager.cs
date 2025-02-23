@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SpriteManager : MonoBehaviour
 {
+    [SerializeField] private bool checkVariables = false;
+
     [Header("Objects")]
-    [SerializeField] private GameObject insertColliderFolder;
+    private static GameObject insertColliderFolder;
     [SerializeField] private GameObject insertSpecialObjectsFolder;
-    [SerializeField] private SpriteRenderer insertBackground;
-    [SerializeField] private SpriteRenderer insertPlayer;
     [SerializeField] private GameObject insertForExtraColorFolder;
 
     public ColorTheme[] colorThemes;
@@ -20,17 +20,13 @@ public class SpriteManager : MonoBehaviour
     public static SpriteManager instance;
 
     void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+    { 
+        insertColliderFolder = GameObject.FindWithTag("Colliders");
+        background = GameObject.FindWithTag("Background").GetComponent<SpriteRenderer>();
+        player = GameObject.FindWithTag("PlayerSprite").GetComponent<SpriteRenderer>();
+
+        //insertSpecialObjectsFolder = GameObject.FindWithTag("SpecialObjectsFolder");
+        //insertForExtraColorFolder = GameObject.FindWithTag("ExtraColorFolder");
 
         walls = new SpriteRenderer[insertColliderFolder.transform.childCount];
 
@@ -38,7 +34,22 @@ public class SpriteManager : MonoBehaviour
         {
             walls[i] = insertColliderFolder.transform.GetChild(i).GetComponent<SpriteRenderer>();
         }
-        background = insertBackground;
-        player = insertPlayer;
     }
+
+    private void Update()
+    {
+
+        if (checkVariables) 
+        {
+            print("Walls index 0: " + walls[0]);
+            print("background: " + background);
+            print("player: " + player);
+            print("me, spriteManager: " + instance);
+            print("");
+            print("colorThemes index 0: " + colorThemes[0]);
+            checkVariables = false;
+        }
+    }
+
 }
+
