@@ -17,6 +17,7 @@ public class WorldColor : MonoBehaviour
     private Color allWallsColor;
     private Color backgroundColor;
     private Color playerColor;
+    private Color specialObject;
 
     private static int roomPriority;
 
@@ -37,6 +38,7 @@ public class WorldColor : MonoBehaviour
         allWallsColor = myTheme.walls;
         backgroundColor = myTheme.background;
         playerColor = myTheme.player;
+        specialObject = myTheme.specialObjects;
     }
 
     void LateUpdate()
@@ -48,6 +50,11 @@ public class WorldColor : MonoBehaviour
                 changeColor = false;
             }
 
+            foreach (var sprite in SpriteManager.specialObjects)
+            {
+                if (sprite != null)
+                    sprite.color = Color.LerpUnclamped(sprite.color, specialObject, colorChangeSpeed * Time.deltaTime);
+            }
 
             foreach (var sprite in SpriteManager.walls)
             {

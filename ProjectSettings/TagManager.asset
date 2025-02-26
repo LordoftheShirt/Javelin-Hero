@@ -9,6 +9,7 @@ TagManager:
   - Background
   - PlayerSprite
   - Colliders
+  - SpecialObjects
   layers:
   - Default
   - TransparentFX
@@ -46,11 +47,17 @@ TagManager:
   - name: Background
     uniqueID: 3744179803
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Dashed Line
+    uniqueID: 1795307181
     locked: 0
   - name: Player
     uniqueID: 2632885569
+    locked: 0
+  - name: Trident
+    uniqueID: 1628827311
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Colliders
     uniqueID: 1237763387

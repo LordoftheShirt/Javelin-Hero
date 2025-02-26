@@ -44,7 +44,10 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        FeedGroundData();
+        if (playerAnimation != null)
+        {
+            FeedGroundData();
+        }
         desiredJump |= input.RetrieveJumpInput(); 
     }
 
