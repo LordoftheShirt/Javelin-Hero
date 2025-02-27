@@ -25,6 +25,7 @@ public class WorldColor : MonoBehaviour
     private ColorTheme myTheme;
 
 
+
     void Start()
     {
         spriteManager = GameObject.FindGameObjectWithTag("SpriteManager").GetComponent<SpriteManager>();
@@ -35,10 +36,7 @@ public class WorldColor : MonoBehaviour
             Debug.LogWarning("Sound: " + desiredColorTheme + " not found!");
             return;
         }
-        allWallsColor = myTheme.walls;
-        backgroundColor = myTheme.background;
-        playerColor = myTheme.player;
-        specialObject = myTheme.specialObjects;
+        AssignColors();
     }
 
     void LateUpdate()
@@ -67,6 +65,12 @@ public class WorldColor : MonoBehaviour
             SpriteManager.background.color = Color.LerpUnclamped(SpriteManager.background.color, backgroundColor, colorChangeSpeed * Time.deltaTime);
         }
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            AssignColors();
+            print("GO");
+            changeColor = true;
+        }
     }
 
 
@@ -77,6 +81,14 @@ public class WorldColor : MonoBehaviour
             roomPriority = roomNumber;
             changeColor = true;
         }
+    }
+
+    private void AssignColors()
+    {
+        allWallsColor = myTheme.walls;
+        backgroundColor = myTheme.background;
+        playerColor = myTheme.player;
+        specialObject = myTheme.specialObjects;
     }
 
 }
