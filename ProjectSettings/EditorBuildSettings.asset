@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/True Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Level2 Exodus.unity
+    guid: d1ec2d6e9be49f04d8e38b85faa3c5f7
   m_configObjects: {}
