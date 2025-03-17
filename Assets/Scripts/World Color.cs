@@ -57,7 +57,7 @@ public class WorldColor : MonoBehaviour
             foreach (var sprite in SpriteManager.walls)
             {
                 if (sprite != null)
-                    sprite.color = Color.LerpUnclamped(sprite.color, allWallsColor, colorChangeSpeed * Time.deltaTime);
+                    sprite.color = Color.LerpUnclamped(sprite.color, new Color(allWallsColor.r, allWallsColor.g, allWallsColor.b, sprite.color.a), colorChangeSpeed * Time.deltaTime);
 
             }
 
