@@ -39,6 +39,7 @@ public class TridentBehaviour : MonoBehaviour
             {
                 isIdleState = false;
                 edgeCollider.enabled = true;
+                FindObjectOfType<AudioManager>().Play("Throw0");
             }
         }
 
@@ -100,6 +101,10 @@ public class TridentBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             //if (collision.TryGetComponent<>)
+        }
+        if (!hasLanded)
+        {
+            FindObjectOfType<AudioManager>().Play("Hit0");
         }
         hasLanded = true;
         body.excludeLayers = layerMaskLanded;
