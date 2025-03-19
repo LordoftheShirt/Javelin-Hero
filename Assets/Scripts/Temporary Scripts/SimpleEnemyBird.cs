@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SimpleEnemyBird : MonoBehaviour
 {
     [SerializeField, Range(0, 50)] private float moveSpeed = 5f;
-    [SerializeField] LayerMask findWallsLayerMask, deathAvoidLayerMask;
+    [SerializeField] private LayerMask findWallsLayerMask, deathAvoidLayerMask;
+    [SerializeField] private GameObject deathZone;
 
     private int rayDirection = 1;
     private RaycastHit2D avoidWallsHit;
@@ -65,14 +67,27 @@ public class SimpleEnemyBird : MonoBehaviour
                 }
                 // bird gets jumped on. Dies.
                 //print("DIE!");
-                boxCollider.enabled = false;
-                isAlive = false;
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.gravityScale = 1;
-                rb.angularDrag = 0.05f;
-                rb.rotation = 45f;
-                rb.excludeLayers = deathAvoidLayerMask;
+                Die();
             }
         }
     }
+
+    public void Die()
+    {
+        if (boxCollider.enabled == true)
+        {
+            FindObjectOfType<AudioManager>().Play("DieBird");
+        }
+        boxCollider.enabled = false;
+        isAlive = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 1;
+        rb.angularDrag = 0.05f;
+        rb.rotation = 45f;
+        rb.excludeLayers = deathAvoidLayerMask;
+        if (deathZone != null)
+            deathZone.SetActive(false);
+    }
 }
+
+

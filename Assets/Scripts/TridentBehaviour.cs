@@ -100,14 +100,20 @@ public class TridentBehaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //if (collision.TryGetComponent<>)
+            if (collision.TryGetComponent<SimpleEnemyBird>(out SimpleEnemyBird component))
+            {
+                component.Die();
+            }
         }
-        if (!hasLanded)
+        else
         {
-            FindObjectOfType<AudioManager>().Play("Hit0");
+            if (!hasLanded)
+            {
+                FindObjectOfType<AudioManager>().Play("Hit0");
+            }
+            hasLanded = true;
+            body.excludeLayers = layerMaskLanded;
         }
-        hasLanded = true;
-        body.excludeLayers = layerMaskLanded;
     }
 
 
