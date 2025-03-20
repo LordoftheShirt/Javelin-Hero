@@ -9,9 +9,15 @@ public class TridentBehaviour : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float anticipationSpeed = 5f;
     [SerializeField, Range(0f, 2f)] private float anticipationTime = 0.2f;
     [SerializeField, Range(0f, 90f)] private float noAnticipationAngle = 40;
+    [SerializeField, Range(0f, 20f)] private float dashedLineToRedAngle = 5;
     [SerializeField] private Transform followAnchor;
     [SerializeField] private Transform cursor;
     [SerializeField] private LayerMask layerMaskLanded, layerMaskIdle;
+
+    [SerializeField] private GameObject kebabPlatform;
+
+    [SerializeField] private LineRenderer dashedLine;
+    [SerializeField] private Color[] myColors;
 
     private Vector2 normal;
     private Vector3 cursorToTridentDelta;
@@ -37,6 +43,8 @@ public class TridentBehaviour : MonoBehaviour
         {
             if (isIdleState)
             {
+                print(transform.eulerAngles.z);
+
                 isIdleState = false;
                 edgeCollider.enabled = true;
                 FindObjectOfType<AudioManager>().Play("Throw0");
@@ -52,6 +60,8 @@ public class TridentBehaviour : MonoBehaviour
                 edgeCollider.enabled = false;
                 body.excludeLayers = layerMaskIdle;
                 anticipationCounter = anticipationTime;
+
+                kebabPlatform.SetActive(false);
             }
         }
     }
@@ -63,6 +73,24 @@ public class TridentBehaviour : MonoBehaviour
             UpTowardsCursor();
             transform.position = Vector2.MoveTowards(transform.position, followAnchor.position, Time.deltaTime * idleFollowSpeed);
         }
+        
+        if ((transform.eulerAngles.z < 200 + dashedLineToRedAngle && transform.eulerAngles.z > 200 - dashedLineToRedAngle) || (transform.eulerAngles.z < 160 + dashedLineToRedAngle && transform.eulerAngles.z > 160 - dashedLineToRedAngle))
+        {
+            // if javelin is pointing in the kebab hop angle.
+            dashedLine.startColor = myColors[2];
+            dashedLine.endColor = myColors[3];
+        }
+        else if (transform.eulerAngles.z < 180 + 1 && transform.eulerAngles.z > 180 - 1)
+        {
+            // if javelin is pointing straight down
+            dashedLine.startColor = myColors[4];
+            dashedLine.endColor = myColors[5];
+        }
+        else if (dashedLine.endColor != myColors[1])
+        {
+            dashedLine.startColor = myColors[0];
+            dashedLine.endColor = myColors[1];
+        } 
     }
 
     private void FixedUpdate()
@@ -110,8 +138,14 @@ public class TridentBehaviour : MonoBehaviour
             if (!hasLanded)
             {
                 FindObjectOfType<AudioManager>().Play("Hit0");
+
+                if (transform.eulerAngles.z < 180 + 20 && transform.eulerAngles.z > 180 - 20)
+                { // && collision.closestPoint bla bla bla
+                    kebabPlatform.SetActive(true);
+                }
             }
             hasLanded = true;
+
             body.excludeLayers = layerMaskLanded;
         }
     }
